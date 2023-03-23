@@ -4,16 +4,30 @@
 # echo -e "\e[?1c"
 # run
 # clear > /dev/tty1 2>&1 && python3 clock/clock.py > /dev/tty1 2>&1
+# crontab it too for every minute!
+# * * * * * python3 clock/clock.py > /dev/tty1 2>&1
+
 
 from termcolor import cprint
 from pyfiglet import figlet_format
 import os, sys
 from datetime import datetime
+from terminal import move
+import socket
 
 message_file_name = 'message.txt'
 
-def move (y, x):
-    print("\033[%d;%dH" % (y, x))
+def show_network_status ():
+    move(55, 0)
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        print(s.getsockname()[0] + ' <- pi')
+        s.close()
+    except:
+        print("no network")
+
+show_network_status()
 
 now = datetime.now()
 
