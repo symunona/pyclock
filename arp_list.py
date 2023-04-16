@@ -51,13 +51,14 @@ def getUsersOnSubnet():
 
 def printUsers():
     status = network_status()
-    clear(30, 0, 10, 50)
+    clear(33, 0, 1, 50)
     print(status)
 
     users = getUsersOnSubnet().values()
-    move(34, 0)
-    print('users:')
-    for user in users:
-        print(user.ip + ' ' + user.resolve )
+    clear(35, 0, 10, 50)
+    if (len(users) > 0):
+        print('users:')
+        for user in users:
+            print(user.ip + ' ' + user.resolve )
 
 printUsers()
