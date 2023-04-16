@@ -29,32 +29,31 @@ current_date = now.strftime("%B     %d      %a ")
 screen_height = size = os.get_terminal_size().lines
 screen_width = size = os.get_terminal_size().columns
 
-## CLOCK
-move(7, 0)
-cprint(figlet_format(current_time, font='dohmonosq', justify="center", width=screen_width), 'green', attrs=['concealed'])
-
-
-## Date today
-move(0, 0)
-cprint(figlet_format(current_date, font='doom', width=screen_width, justify="right"),
-       'white')
-
-## MESSAGE
-move(25, 0)
-if (os.path.exists(os.path.join(sys.path[0], message_file_name))):
-    with open(os.path.join(sys.path[0], message_file_name)) as f:
-        lines = f.readlines()
-        cprint(figlet_format(lines[0], font='bannerf', width=screen_width, justify="center"), 'blue')
-
-
-
-
 ## Global Clock - print pacific time
 move(0, 0)
 
 western = timezone('US/Pacific')
 format = '%H:%M'
 print('Pacific: ', datetime.now(western).strftime(format))
+
+
+## CLOCK
+move(9, 0)
+cprint(figlet_format(current_time, font='dohmonosq', justify="center", width=screen_width), 'green', attrs=['concealed'])
+
+
+## Date today
+move(2, 0)
+cprint(figlet_format(current_date, font='doom', width=screen_width, justify="right"),
+       'white')
+
+## MESSAGE
+move(29, 0)
+if (os.path.exists(os.path.join(sys.path[0], message_file_name))):
+    with open(os.path.join(sys.path[0], message_file_name)) as f:
+        lines = f.readlines()
+        cprint(figlet_format(lines[0], font='bannerf', width=screen_width, justify="center"), 'blue')
+
 
 
 ## WEATHER
