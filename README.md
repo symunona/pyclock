@@ -2,11 +2,14 @@
 
 A clock util for raspberry pi.
 
+I had a screen and a raspberry lying around and I did not have a clock.
+Here is one. With wttr.in weather forecast.
+
 ### Installation
 
 `sudo apt install arp-scan`
 
-`pip3 install termcolor pyfiglet`
+`pip3 install termcolor pyfiglet pytz`
 
 Place your script somewhere, like under `/home/pi/py-clock`
 
@@ -18,6 +21,12 @@ Add the local network scanner to your `sudo crontab -e` as network scanning requ
 
 For name resolution edit `arp_list.py` as for some reason
 I could not get that to work dynamically.
+
+Create a `location.txt` under weather if you want it to work.
+
+Check it with wttr.in with curl:
+
+`curl 'wttr.in/:help'`
 
 Enjoy!
 

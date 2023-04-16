@@ -1,2 +1,6 @@
 __pycache__
 *.pyc
+weather/weather.txt
+weather/location.txt
+arp.json
+message.txt

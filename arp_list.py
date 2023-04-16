@@ -1,14 +1,20 @@
 # List computers on network
 
-from terminal import clear
+from terminal import clear, move
 import subprocess
 import shlex
+import socket
+import json
+from os.path import  dirname, realpath
 
 INTERFACE_NAME = 'wlan0'
 
-familiar = {
+familiar = {}
+try:
     # 'mac address': 'name to be resolved to'
-}
+    familiar = json.load(open(dirname(realpath(__file__)) + '/arp.json', 'r'))
+except:
+    pass
 
 class NetworkComputer:
     def __init__(self, ip, mac, name):
@@ -16,25 +22,42 @@ class NetworkComputer:
         self.mac = mac
         self.name = name
         self.resolve = familiar.get(self.mac) or ''
+        if (ip.endswith('50')): self.resolve = ' * panni (gateway)'
 
+
+def network_status ():
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        sock_ip = s.getsockname()[0] + ' * me'
+        s.close()
+        return sock_ip
+    except:
+        return "no network"
 
 
 def getUsersOnSubnet():
-    outputRaw = subprocess.check_output(shlex.split('arp-scan -I ' + INTERFACE_NAME + ' -l'))
-    output = outputRaw.splitlines()
+    command = shlex.split('/usr/sbin/arp-scan -I ' + INTERFACE_NAME + ' -l')
+    output = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode('utf-8')
+
+    output = output.splitlines()
+
     users = {}
     for device in output[2:-3]:
-        line_parts = device.decode().split('\t')
+        line_parts = device.split('\t')
         ip = line_parts[0]
         users[ip] = (NetworkComputer(ip, line_parts[1], line_parts[2]))
     return users
 
 def printUsers():
+    status = network_status()
+    clear(30, 0, 10, 50)
+    print(status)
+
     users = getUsersOnSubnet().values()
-    clear(57, 0, 12, 40)
+    move(34, 0)
+    print('users:')
     for user in users:
         print(user.ip + ' ' + user.resolve )
-
-
 
 printUsers()
