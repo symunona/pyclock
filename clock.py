@@ -21,18 +21,23 @@ message_file_name = 'message.txt'
 
 now = datetime.now()
 
-current_time_h = now.strftime("   %H")
-current_time_m = now.strftime("       %M")
+current_time_h = now.strftime(" %H")
+current_time_m = now.strftime("    %M")
 current_time = now.strftime("%H %M")
-current_date = now.strftime("%B     %d      %a                   ")
+current_date = now.strftime("%B     %d      %a ")
 
 screen_height = size = os.get_terminal_size().lines
 screen_width = size = os.get_terminal_size().columns
 
 ## CLOCK
-move(5, 0)
+move(7, 0)
 cprint(figlet_format(current_time, font='dohmonosq', justify="center", width=screen_width), 'green', attrs=['concealed'])
 
+
+## Date today
+move(0, 0)
+cprint(figlet_format(current_date, font='doom', width=screen_width, justify="right"),
+       'white')
 
 ## MESSAGE
 move(25, 0)
@@ -42,10 +47,6 @@ if (os.path.exists(os.path.join(sys.path[0], message_file_name))):
         cprint(figlet_format(lines[0], font='bannerf', width=screen_width, justify="center"), 'blue')
 
 
-## Date today
-move(61, 0)
-cprint(figlet_format(current_date, font='doom', width=screen_width, justify="right"),
-       'white')
 
 
 ## Global Clock - print pacific time

@@ -55,8 +55,8 @@ def printUsers():
     print(status)
 
     users = getUsersOnSubnet().values()
-    clear(35, 0, 10, 50)
     if (len(users) > 0):
+        clear(35, 0, 10, 50)
         print('users:')
         for user in users:
             print(user.ip + ' ' + user.resolve )
