@@ -7,10 +7,12 @@ WEATHER_FILE = dirname(realpath(__file__)) + '/weather.txt'
 REFRESH_FREQUENCY = 3600 # seconds - 1 hour
 
 try:
-    location_file = open(dirname(realpath(__file__)) + '/location.txt', 'r')
+    path = dirname(realpath(__file__)) + '/location.txt'
+    location_file = open(path, 'r')
     location = location_file.readlines()[0]
 except:
-    print("Missing location.txt file! Create it with your location data defined in wttr.in!")
+    #print("Missing location.txt file! Create it with your location data defined in wttr.in!")
+    pass
 
 # ?1 is the standard daily forecast format only for today.
 url ="https://wttr.in/" + location + '?2F'
